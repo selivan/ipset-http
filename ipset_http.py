@@ -14,7 +14,6 @@ import ipaddress
 
 
 class requestHandler(BaseHTTPRequestHandler):
-
     # This sould be defined from outside before passing to HTTPServer
     usage_info = ''
     entry_timeout = 0
@@ -26,13 +25,10 @@ class requestHandler(BaseHTTPRequestHandler):
         query = urllib.parse.urlparse(self.path).query
         params = urllib.parse.parse_qs(query)
 
-        response_code=200
-        message='Done'
-
         if 'add_ip' not in params:
             self.send_response(code=400)
             self.end_headers()
-            self.wfile.write(bytes(self.usage_info,'utf8'))
+            self.wfile.write(bytes(self.usage_info, 'utf8'))
             return
         else:
             ip = params['add_ip'][0]
@@ -85,7 +81,6 @@ class ForkingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):
 
 
 def run():
-
     # Locale settings for all programs we call
     os.environ['LC_ALL'] = 'POSIX'
 
@@ -102,9 +97,8 @@ def run():
     #     print('This program should be started from root')
     #     sys.exit(1)
 
-    whitelist = str(args.whitelist).split(',')
-    if whitelist == '':
-        whitelist = []
+    # Exclude '' entries
+    whitelist = [i for i in str(args.whitelist).split(',') if i != '']
 
     for net in whitelist:
         try:
@@ -123,7 +117,8 @@ def run():
     requestHandler.entry_timeout = args.timeout
     requestHandler.set_name = args.set_name
 
-    #httpd = HTTPServer( ('0.0.0.0', args.port), requestHandler)
+    # httpd = HTTPServer( ('0.0.0.0', args.port), requestHandler)
+    print('Starting server on port ' + str(args.port))
     httpd = ForkingHTTPServer(('0.0.0.0', args.port), requestHandler)
 
     httpd.serve_forever()
