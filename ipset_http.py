@@ -14,7 +14,7 @@ import ipaddress
 
 
 class requestHandler(BaseHTTPRequestHandler):
-    # This sould be defined from outside before passing to HTTPServer
+    # This sould be defined from outside before passing this class to HTTPServer
     usage_info = ''
     entry_timeout = 0
     set_name = ''
