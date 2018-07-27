@@ -92,10 +92,10 @@ def run():
     api_help = 'HTTP params: add_ip=ip[&set=set_name][&timeout=n]\n'
 
     parser = ArgumentParser(epilog=api_help)
-    parser.add_argument('--port', type=int, default=9000, help='tcp port to listen on')
-    parser.add_argument('--set-name', default='block', help='ipset set name')
-    parser.add_argument('--timeout', type=int, default=120, help='timeout for added ipset entry')
-    parser.add_argument('--whitelist', default='', help='networks to exclude from adding. Separated by comma.')
+    parser.add_argument('--port', type=int, default=9000, help='tcp port to listen on, default 9000')
+    parser.add_argument('--set-name', default='block', help='ipset set name, default "block"')
+    parser.add_argument('--timeout', type=int, default=120, help='timeout for added ipset entry, default 120')
+    parser.add_argument('--whitelist', default='', help='networks to whitelist, separated by comma')
     args = parser.parse_args()
 
     # if os.geteuid() != 0:
