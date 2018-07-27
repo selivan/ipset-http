@@ -9,7 +9,7 @@ import urllib.parse
 import subprocess
 from subprocess import PIPE
 import os
-# https://docs.python.org/3.5/library/ipaddress.html
+# https://docs.python.org/3/library/ipaddress.html
 import ipaddress
 
 
