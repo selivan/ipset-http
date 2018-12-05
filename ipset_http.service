@@ -1,0 +1,21 @@
+[Unit]
+Description=HTTP API to add ipset entries with timeout
+
+After=network.target
+After=syslog.target
+
+[Service]
+User=root
+
+ExecStart=/usr/local/bin/ipset_http.py --port 9000 --set-name block --timeout 120 --whitelist 127.0.0.0/8
+
+Type=simple
+
+SyslogIdentifier=ipset_http
+
+Restart=always
+# time to sleep before restarting a service
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
